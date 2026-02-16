@@ -1,7 +1,6 @@
 // API Configuration
-// For development, uses localhost
-// For production, uses environment variable or default Railway URL
+// Update this with your Railway backend URL after deployment
 
-export const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000';
+export const API_URL = process.env.REACT_APP_API_URL || 'https://devhub-platform-production.up.railway.app';
 
 export default API_URL;
