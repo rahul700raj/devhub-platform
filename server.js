@@ -12,7 +12,18 @@ const app = express();
 app.use(helmet());
 app.use(compression());
 app.use(morgan('dev'));
-app.use(cors());
+
+// CORS Configuration - Update with your Vercel URL
+app.use(cors({
+  origin: [
+    'http://localhost:3000',
+    'https://devhub-platform.vercel.app',
+    'https://devhub-platform-git-main-rahul700raj.vercel.app',
+    /\.vercel\.app$/
+  ],
+  credentials: true
+}));
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -34,6 +45,21 @@ mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/devhub', 
 // Health check
 app.get('/health', (req, res) => {
   res.json({ status: 'ok', message: 'DevHub API is running' });
+});
+
+// Root endpoint
+app.get('/', (req, res) => {
+  res.json({ 
+    message: 'DevHub API',
+    version: '1.0.0',
+    endpoints: {
+      auth: '/api/auth',
+      users: '/api/users',
+      repositories: '/api/repositories',
+      issues: '/api/issues',
+      search: '/api/search'
+    }
+  });
 });
 
 const PORT = process.env.PORT || 5000;
